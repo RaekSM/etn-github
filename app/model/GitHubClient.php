@@ -13,7 +13,7 @@ class GitHubClient extends Nette\Object
     const
         BASEURL     = 'https://api.github.com/',
         USERURL     = 'https://api.github.com/users/',
-        ACCESTOKEN  = "6059eb52eea7d5dccfe76279bc2ca94ea78a8ee3";
+        ACCESTOKEN  = "";
 
 
     /**
