@@ -32,7 +32,8 @@
 		"latte/latte": "~2.3.0",
 		"tracy/tracy": "~2.3.0",
 		"kdyby/doctrine": "*",
-		"kdyby/events": "@dev"
+		"kdyby/events": "@dev",
+	  	"knplabs/github-api": "~1.4"
 	},
 	"require-dev": {
 		"nette/tester": "~1.3"

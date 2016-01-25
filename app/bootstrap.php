@@ -8,6 +8,8 @@ $configurator = new Nette\Configurator;
 $configurator->enableDebugger(__DIR__ . '/../log');
 
 $configurator->setTempDirectory(__DIR__ . '/../temp');
+\Tracy\Debugger::$maxDepth = 50;
+\Tracy\Debugger::$maxLen = 50000000;
 
 $configurator->createRobotLoader()
 	->addDirectory(__DIR__)

@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\UserEntity;
 use Nette;
 use Nette\Security\Passwords;
 
@@ -12,20 +13,20 @@ use Nette\Security\Passwords;
 class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 {
 	const
-		TABLE_NAME = 'users',
+		TABLE_NAME = 'user_entity',
 		COLUMN_ID = 'id',
-		COLUMN_NAME = 'username',
-		COLUMN_PASSWORD_HASH = 'password',
-		COLUMN_ROLE = 'role';
+		COLUMN_LOGIN = 'login',
+		COLUMN_PASSWORD_HASH = 'password';
 
 
-	/** @var Nette\Database\Context */
-	private $database;
+	/**
+	 * @var \Kdyby\Doctrine\EntityManager
+	 */
+    public $em;
 
-
-	public function __construct(Nette\Database\Context $database)
+	public function __construct(\Kdyby\Doctrine\EntityManager $entityManager)
 	{
-		$this->database = $database;
+		$this->em = $entityManager;
 	}
 
 
@@ -38,42 +39,18 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 	{
 		list($username, $password) = $credentials;
 
-		$row = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_NAME, $username)->fetch();
+		$row = $this->em->getRepository(UserEntity::getClassName())->findOneBy(array('login'=>$username));
 
 		if (!$row) {
 			throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
 
-		} elseif (!Passwords::verify($password, $row[self::COLUMN_PASSWORD_HASH])) {
+		} elseif (!Passwords::verify($password, $row->password)) {
 			throw new Nette\Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
 
-		} elseif (Passwords::needsRehash($row[self::COLUMN_PASSWORD_HASH])) {
-			$row->update(array(
-				self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
-			));
 		}
 
-		$arr = $row->toArray();
-		unset($arr[self::COLUMN_PASSWORD_HASH]);
-		return new Nette\Security\Identity($row[self::COLUMN_ID], $row[self::COLUMN_ROLE], $arr);
-	}
-
-
-	/**
-	 * Adds new user.
-	 * @param  string
-	 * @param  string
-	 * @return void
-	 */
-	public function add($username, $password)
-	{
-		try {
-			$this->database->table(self::TABLE_NAME)->insert(array(
-				self::COLUMN_NAME => $username,
-				self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
-			));
-		} catch (Nette\Database\UniqueConstraintViolationException $e) {
-			throw new DuplicateNameException;
-		}
+		$arr = array('id' => $row->id, 'role' => '');
+		return new Nette\Security\Identity($arr[self::COLUMN_ID], $arr['role'], $arr);
 	}
 
 }

@@ -1,0 +1,81 @@
+{block content}
+<div class="search-prehled">
+
+    <div class="search-result">
+        Term: {$search->search}<br />
+        Date: {$search->date->format('d. m. Y - H:i:s')}<br />
+        IP: {$search>ip}<br />
+    </div>
+            {foreach $search->repositories as $repository}
+                <h3>Repository</h3>
+                <table>
+                    <th>Name</th>
+                    <th>Full Name</th>
+                    <th>HTML User</th>
+                    <th>HTML Repo</th>
+                    <th>Description</th>
+                    <th>Created</th>
+                    <tr>
+                        <td>{$repository->name}</td>
+                        <td>{$repository->fullName}</td>
+                        <td><a href="{$repository->htmlUrlUser}">{$search->search}</a></td>
+                        <td><a href="{$repository->htmlUrlRepo}">{$repository->fullName}</a></td>
+                        <td>{$repository->description}</td>
+                        <td>{$repository->createdAt->format('d. m. Y - H:i:s')}</td>
+                    </tr>
+                 </table>
+
+                <h3>Branches for {$repository->name}</h3>
+                {if !empty($repository->branches)}
+                {foreach $repository->branches as $branche}
+                    <table>
+                        <th>Name</th>
+                        <th>API URL</th>
+                        <tr>
+                            <td>{$branche->name}</td>
+                            <td><a href="{$branche->CommitUrl}">{$branche->name}</a></td>
+                        </tr>
+                    </table>
+                {/foreach}
+                {else}
+                    <p>Žádné branches</p>
+                {/if}
+
+                <h3>Tags for {$repository->name}</h3>
+                {if !empty($repository->tags)}
+                {foreach $repository->tags as $tag}
+                    <table>
+                        <th>Name</th>
+                        <th>Commit API URL</th>
+                        <tr>
+                            <td>{$tag->name}</td>
+                            <td><a href="{$branche->CommitUrl}">{$tag->name}</a></td>
+                        </tr>
+                    </table>
+                {/foreach}
+                {else}
+                   <p>Žádné tagy</p>
+                {/if}
+
+                <h3>Commits for {$repository->name}</h3>
+                {if !empty($repository->commits)}
+                {foreach $repository->commits as $commit}
+                    <table>
+                        <th>Author</th>
+                        <th>Commiter</th>
+                        <th>Message</th>
+                        <tr>
+                            <td>{$commit->Author}</td>
+                            <td>{$commit->committer}</td>
+                            <td>{$commit->message}</td>
+                        </tr>
+                    </table>
+                {/foreach}
+                {else}
+                   <p>Žádné commity</p>
+                {/if}
+                <br /><br />
+            {/foreach}
+
+</div>
+{/block}

@@ -3,7 +3,8 @@
 namespace App\Presenters;
 
 use Nette;
-use App\Model;
+use App\Model,
+    Nette\Security\User;
 
 
 /**
@@ -11,5 +12,12 @@ use App\Model;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
+    /** @var User */
+    private $user;
+
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
 
 }

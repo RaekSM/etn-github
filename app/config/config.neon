@@ -8,6 +8,15 @@ parameters:
 php:
 	date.timezone: Europe/Prague
 
+extensions:
+    console: Kdyby\Console\DI\ConsoleExtension
+    events: Kdyby\Events\DI\EventsExtension
+    annotations: Kdyby\Annotations\DI\AnnotationsExtension
+    doctrine: Kdyby\Doctrine\DI\OrmExtension
+
+doctrine:
+    metadata:
+        App: %appDir%
 
 application:
 	errorPresenter: Error
@@ -18,8 +27,13 @@ application:
 session:
 	expiration: 14 days
 
+events:
+    subscribers:
 
 services:
-	- App\Model\UserManager
-	- App\Forms\SignFormFactory
-	router: App\RouterFactory::createRouter
+    - App\Model\GitHubClient
+    - App\Model\GitHubSaver
+    - App\Model\TimeDelete
+    - App\Model\UserManager
+    - App\Forms\SignFormFactory
+    router: App\RouterFactory::createRouter
