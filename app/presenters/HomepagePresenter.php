@@ -62,12 +62,19 @@ class HomepagePresenter extends BasePresenter
 
 		if(is_array($this->returnData)) {
 			if ($this->returnData['error'] == 1) {
-				$this->flashMessage('User not found', 'error');
+				$this->flashMessage('User not found, the search ordered', 'error');
 			} elseif ($this->returnData['error'] == 2) {
+				$this->flashMessage('User not found, most likely you entered illegal characters in username', 'error');
+			} elseif ($this->returnData['error'] == 3) {
+				$this->flashMessage('Bad username, user not found', 'error');
+			} elseif ($this->returnData['error'] == 4) {
+				// data not save, redirect to form with error message
 				$this->flashMessage('Doctrine error, data not save', 'error');
+				$this->redirect('this');
 			}
-		}else{
-			$this->redirect('ShowSearch:',$this->returnData);
+
+			// errors setted and data save, redirect to show search
+			$this->redirect('ShowSearch:', $this->returnData['data']);
 		}
 	}
 

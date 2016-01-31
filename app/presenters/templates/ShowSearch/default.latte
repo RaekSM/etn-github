@@ -1,11 +1,11 @@
 {block content}
 <div class="search-prehled">
-
     <div class="search-result">
         Term: {$search->search}<br />
         Date: {$search->date->format('d. m. Y - H:i:s')}<br />
-        IP: {$search>ip}<br />
+        IP: {$search->ip}<br />
     </div>
+            {if !empty($search->repositories)}
             {foreach $search->repositories as $repository}
                 <h3>Repository</h3>
                 <table>
@@ -76,6 +76,9 @@
                 {/if}
                 <br /><br />
             {/foreach}
+             {else}
+               <p>Nebyly nalezeny žádné data!</p>
+            {/if}
 
 </div>
 {/block}

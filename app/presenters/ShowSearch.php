@@ -21,10 +21,14 @@ class ShowSearchPresenter extends BasePresenter
 
     public function renderDefault($id)
     {
-        $search = $this->em->find(Search::getClassName(), $id);
-        if (!$search) {
+        if (!is_null($id)) {
+            $search = $this->em->find(Search::getClassName(), $id);
+            if (!$search) {
+                $this->flashMessage('Data not found for this id', 'error');
+                $this->redirect('Homepage:');
+            }
+        } else {
             $this->flashMessage('Data not found for this id', 'error');
-            $this->redirect('Homepage:');
         }
         $this->template->search = $search;
 

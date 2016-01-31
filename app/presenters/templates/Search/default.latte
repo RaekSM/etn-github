@@ -10,6 +10,7 @@
         Date: {$value->date->format('d. m. Y - H:i:s')}<br />
         IP: {$value->ip}<br />
     </div>
+            {if !empty($value->repositories)}
             {foreach $value->repositories as $repository}
                 <h3>Repository</h3>
                 <table>
@@ -80,6 +81,9 @@
                 {/if}
                 <br /><br />
             {/foreach}
+            {else}
+               <p>Nebyly nalezeny žádné data!</p>
+            {/if}
     {/foreach}
 
     {for $i = 1; $i < ($paginator->getItemCount()/$paginator->getItemsPerPage()) + 1; $i++}

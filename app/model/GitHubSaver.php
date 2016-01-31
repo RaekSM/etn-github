@@ -34,6 +34,7 @@ class GitHubSaver extends Nette\Object
     public $repository;
     public $status = array();
     public $options;
+    public $search;
 
     // inject doctrine entity mamager to object
     public function __construct(\Kdyby\Doctrine\EntityManager $entityManager, \Nette\Http\Request $httpRequest, \App\Model\GitHubClient $client)
@@ -53,20 +54,40 @@ class GitHubSaver extends Nette\Object
      */
     public function prepare($serach, $options = null)
     {
+        // no error
+        $this->status['error'] = false;
         $this->options = $options;
         $this->repository = $this->ghc->getRepository($serach);
 
         // when user repository for user not found
         if (isset($this->repository->message) && $this->repository->message == "Not Found"){
             $this->status['error'] = 1;
+            // save only serach term and other
+            $this->status['data'] = $this->doctrineFlush($this->saveData($serach));
+            return $this->status;
+        } elseif (is_null($this->repository)) {
+            // when in username bad char, github api show 404 page
+            $this->status['error'] = 2;
+            // save only serach term and other
+            $this->status['data'] = $this->doctrineFlush($this->saveData($serach));
+            return $this->status;
+        } elseif (empty($this->repository)) {
+            // when return empty array
+            $this->status['error'] = 3;
+            // save only serach term and other
+            $this->status['data'] = $this->doctrineFlush($this->saveData($serach));
             return $this->status;
         }
 
-        // call method for save data to db
-        $this->status = $this->saveData($serach);
+        // call method for prepare data to save data on db
+        $this->search = $this->saveData($serach);
+        // save other data, example repository and branches ...
+        $this->saveOtherData($this->search);
+        // call doctrine flush funtion
+        $this->status['data'] = $this->doctrineFlush($this->search);
         // when doctrine save error
         if (!$this->status) {
-            $this->status['error'] = 2;
+            $this->status['error'] = 4;
             return $this->status;
         }
         return $this->status;
@@ -92,6 +113,20 @@ class GitHubSaver extends Nette\Object
         $search->setSearch($searchString);
         $search->setDate($date);
         $search->setIp($ip);
+
+        $this->em->persist($search);
+
+        return $search;
+    }
+
+    /*
+     * Method for saving other data to entites
+     *
+     * @param object $searchString object search created
+     *
+     * @return void
+     */
+    public function saveOtherData($search) {
 
         // iterate over repositories and set repository entity
         foreach ($this->repository as $key => $value) {
@@ -131,17 +166,10 @@ class GitHubSaver extends Nette\Object
                 $this->saveCommits($value->commits_url, $repository);
             }
 
-            $this->em->persist($search);
             $this->em->persist($repository);
         }
 
-        // save entities
-        if ($this->em->flush()) {
-            return $search->getId();
-        }
-
-        // when error return false
-        return false;
+        return;
     }
 
     /*
@@ -224,5 +252,23 @@ class GitHubSaver extends Nette\Object
         }
 
         return;
+    }
+
+    /*
+     * Method for doctrine flush / save entity to database
+     *
+     * @param object $search object search
+     *
+     * @return int
+     */
+    public function doctrineFlush($search = null){
+        // save entities
+        if ($this->em->flush()) {
+            // return last id
+            return $search->getId();
+        }
+
+        // when error return false
+        return false;
     }
 }
