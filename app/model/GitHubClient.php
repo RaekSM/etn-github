@@ -114,7 +114,7 @@ class GitHubClient extends Nette\Object
      */
     public function gitHubCurl($url)
     {
-        $url = $url . '?access_token=' . self::ACCESTOKEN;
+        $url = $url . '?access_token=' . $this->accestoken;
 
         curl_setopt($this->ch, CURLOPT_URL, $url);
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, 1);
