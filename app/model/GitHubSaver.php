@@ -241,14 +241,16 @@ class GitHubSaver extends Nette\Object
 
         // iterate over the array
         foreach ($commits as $commitValue) {
-            $commit = new Commit();
-            $commit->setAuthor($commitValue->commit->author->name);
-            $commit->setCommitter($commitValue->commit->committer->name);
-            $commit->setMessage($commitValue->commit->message);
-            $commit->setRepository($repository);
+            if(isset($commitValue->commit)) {
+                $commit = new Commit();
+                $commit->setAuthor($commitValue->commit->author->name);
+                $commit->setCommitter($commitValue->commit->committer->name);
+                $commit->setMessage($commitValue->commit->message);
+                $commit->setRepository($repository);
 
-            // preparing save entity
-            $this->em->persist($commit);
+                // preparing save entity
+                $this->em->persist($commit);
+            }
         }
 
         return;

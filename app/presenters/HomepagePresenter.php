@@ -66,7 +66,7 @@ class HomepagePresenter extends BasePresenter
 			} elseif ($this->returnData['error'] == 2) {
 				$this->flashMessage('User not found, most likely you entered illegal characters in username', 'error');
 			} elseif ($this->returnData['error'] == 3) {
-				$this->flashMessage('Bad username, user not found', 'error');
+				$this->flashMessage('Repository for username not found', 'error');
 			} elseif ($this->returnData['error'] == 4) {
 				// data not save, redirect to form with error message
 				$this->flashMessage('Doctrine error, data not save', 'error');
