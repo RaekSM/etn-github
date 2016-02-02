@@ -12,8 +12,7 @@ class GitHubClient extends Nette\Object
     // define constants
     const
         BASEURL     = 'https://api.github.com/',
-        USERURL     = 'https://api.github.com/users/',
-        ACCESTOKEN  = "";
+        USERURL     = 'https://api.github.com/users/';
 
 
     /**
@@ -26,9 +25,12 @@ class GitHubClient extends Nette\Object
      */
     protected $ch;
 
+    protected $accestoken;
+
     // inject doctrine entity mamager to object
-    public function __construct(\Nette\Http\Request $httpRequest)
+    public function __construct($accestoken, \Nette\Http\Request $httpRequest)
     {
+        $this->accestoken = $accestoken;
         $this->request = $httpRequest;
 
         // init curn and check extension is available

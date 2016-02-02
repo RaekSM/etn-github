@@ -31,7 +31,7 @@ events:
     subscribers:
 
 services:
-    - App\Model\GitHubClient
+    - App\Model\GitHubClient(%accestoken%)
     - App\Model\GitHubSaver
     - App\Model\TimeDelete
     - App\Model\UserManager

@@ -3,12 +3,12 @@
 namespace App\Model;
 
 use App\Branche;
-use App\Commit;
-use App\Repository;
-use App\Search;
-use App\Tag;
-use Nette;
-use Symfony\Component\Console\Exception\RuntimeException;
+use App\Commit,
+    App\Repository,
+    App\Search,
+    App\Tag,
+    Nette,
+    Symfony\Component\Console\Exception\RuntimeException;
 
 /**
  * Class of GitHub data saver
