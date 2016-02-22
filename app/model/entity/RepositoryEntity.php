@@ -18,19 +18,19 @@ class Repository extends \Kdyby\Doctrine\Entities\BaseEntity
     protected $name;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, name="full_name")
      */
-    protected $full_name;
+    protected $fullName;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, name="html_url_user")
      */
-    protected $html_url_user;
+    protected $htmlUrlUser;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, name="html_url_repo")
      */
-    protected $html_url_repo;
+    protected $htmlUrlRepo;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -38,29 +38,29 @@ class Repository extends \Kdyby\Doctrine\Entities\BaseEntity
     protected $description;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true, name="created_at")
      */
-    protected $created_at;
+    protected $createdAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true, name="updated_at")
      */
-    protected $updated_at;
+    protected $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true, name="pushed_at")
      */
-    protected $pushed_at;
+    protected $pushedAt;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, name="clone_url")
      */
-    protected $clone_url;
+    protected $cloneUrl;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, name="default_branch")
      */
-    protected $default_branch;
+    protected $defaultBranch;
 
     /**
      * @ORM\ManyToOne(targetEntity="Search", inversedBy="repositories")
@@ -104,15 +104,15 @@ class Repository extends \Kdyby\Doctrine\Entities\BaseEntity
      */
     public function getFullName()
     {
-        return $this->full_name;
+        return $this->fullName;
     }
 
     /**
-     * @param mixed $full_name
+     * @param mixed $fullName
      */
-    public function setFullName($full_name)
+    public function setFullName($fullName)
     {
-        $this->full_name = $full_name;
+        $this->fullName = $fullName;
     }
 
     /**
@@ -120,15 +120,15 @@ class Repository extends \Kdyby\Doctrine\Entities\BaseEntity
      */
     public function getHtmlUrlUser()
     {
-        return $this->html_url_user;
+        return $this->htmlUrlUser;
     }
 
     /**
-     * @param mixed $html_url_user
+     * @param mixed $htmlUrlUser
      */
-    public function setHtmlUrlUser($html_url_user)
+    public function setHtmlUrlUser($htmlUrlUser)
     {
-        $this->html_url_user = $html_url_user;
+        $this->htmlUrlUser = $htmlUrlUser;
     }
 
     /**
@@ -136,15 +136,15 @@ class Repository extends \Kdyby\Doctrine\Entities\BaseEntity
      */
     public function getHtmlUrlRepo()
     {
-        return $this->html_url_repo;
+        return $this->htmlUrlRepo;
     }
 
     /**
-     * @param mixed $html_url_repo
+     * @param mixed $htmlUrlRepo
      */
-    public function setHtmlUrlRepo($html_url_repo)
+    public function setHtmlUrlRepo($htmlUrlRepo)
     {
-        $this->html_url_repo = $html_url_repo;
+        $this->htmlUrlRepo = $htmlUrlRepo;
     }
 
     /**
@@ -168,15 +168,15 @@ class Repository extends \Kdyby\Doctrine\Entities\BaseEntity
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param mixed $created_at
+     * @param mixed $createdAt
      */
-    public function setCreatedAt($created_at)
+    public function setCreatedAt($createdAt)
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -184,15 +184,15 @@ class Repository extends \Kdyby\Doctrine\Entities\BaseEntity
      */
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
-     * @param mixed $updated_at
+     * @param mixed $updatedAt
      */
-    public function setUpdatedAt($updated_at)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -200,15 +200,15 @@ class Repository extends \Kdyby\Doctrine\Entities\BaseEntity
      */
     public function getPushedAt()
     {
-        return $this->pushed_at;
+        return $this->pushedAt;
     }
 
     /**
-     * @param mixed $pushed_at
+     * @param mixed $pushedAt
      */
-    public function setPushedAt($pushed_at)
+    public function setPushedAt($pushedAt)
     {
-        $this->pushed_at = $pushed_at;
+        $this->pushedAt = $pushedAt;
     }
 
     /**
@@ -216,15 +216,15 @@ class Repository extends \Kdyby\Doctrine\Entities\BaseEntity
      */
     public function getCloneUrl()
     {
-        return $this->clone_url;
+        return $this->cloneUrl;
     }
 
     /**
-     * @param mixed $clone_url
+     * @param mixed $cloneUrl
      */
-    public function setCloneUrl($clone_url)
+    public function setCloneUrl($cloneUrl)
     {
-        $this->clone_url = $clone_url;
+        $this->cloneUrl = $cloneUrl;
     }
 
     /**
@@ -232,15 +232,15 @@ class Repository extends \Kdyby\Doctrine\Entities\BaseEntity
      */
     public function getDefaultBranch()
     {
-        return $this->default_branch;
+        return $this->defaultBranch;
     }
 
     /**
-     * @param mixed $default_branch
+     * @param mixed $defaultBranch
      */
-    public function setDefaultBranch($default_branch)
+    public function setDefaultBranch($defaultBranch)
     {
-        $this->default_branch = $default_branch;
+        $this->defaultBranch = $defaultBranch;
     }
 
     /**

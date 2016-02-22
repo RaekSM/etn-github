@@ -29,7 +29,7 @@ class Search extends \Kdyby\Doctrine\Entities\BaseEntity
 
     /**
      * @ORM\OneToMany(targetEntity="Repository", mappedBy="search")
-     * @ORM\OrderBy({"created_at" = "DESC"})
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     protected $repositories;
 

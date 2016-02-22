@@ -18,9 +18,9 @@ class Tag extends \Kdyby\Doctrine\Entities\BaseEntity
     protected $name;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", name="commit_url")
      */
-    protected $commit_url;
+    protected $commitUrl;
 
     /**
      * @ORM\ManyToOne(targetEntity="Repository", inversedBy="tags")
@@ -49,15 +49,15 @@ class Tag extends \Kdyby\Doctrine\Entities\BaseEntity
      */
     public function getCommitUrl()
     {
-        return $this->commit_url;
+        return $this->commitUrl;
     }
 
     /**
-     * @param mixed $commit_url
+     * @param mixed $commitUrl
      */
-    public function setCommitUrl($commit_url)
+    public function setCommitUrl($commitUrl)
     {
-        $this->commit_url = $commit_url;
+        $this->commitUrl = $commitUrl;
     }
 
     /**
